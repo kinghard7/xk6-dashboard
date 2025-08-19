@@ -10,6 +10,9 @@ import "uplot/dist/uPlot.min.css"
 
 import digest from "utils/digest"
 import App from "App"
+import { resolveInitialLanguage, setLanguage } from "i18n"
 
 const rootElement = document.getElementById("root") as HTMLDivElement
+// initialize language before render
+setLanguage(resolveInitialLanguage())
 digest().then((d) => render(<App digest={d} />, rootElement))

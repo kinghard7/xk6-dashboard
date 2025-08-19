@@ -60,12 +60,12 @@ func replay(input string, opts *options, assets *assets, proc *process) error {
 }
 
 func (rep *replayer) run() error {
-	rptr := newReporter(rep.options.Export, rep.assets, rep.proc)
+	rptr := newReporter(rep.options.Export, rep.options.Lang, rep.assets, rep.proc)
 
 	rep.addEventListener(rptr)
 
 	if rep.options.Port >= 0 {
-		server := newWebServer(rep.assets.ui, rptr, rep.proc.logger)
+		server := newWebServer(rep.assets.ui, rptr, rep.proc.logger, rep.options.Lang)
 
 		rep.addEventListener(server)
 

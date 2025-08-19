@@ -10,6 +10,8 @@ The `k6-web-dashboard` is a command-line tool that enables the dashboard event f
 
 It is possible to [convert the result saved by k6 JSON output](#k6-web-dashboard-aggregate) to dashboard event file format. This way, the running result saved in JSON format can be displayed later (even on another computer) as a dashboard or a report can be made from it.
 
+**New in this fork: Multi-language support with Chinese (zh) as default and English (en) available. Use the `--lang` flag to set the initial language for reports and web UI.**
+
 ## Install
 
 Precompiled binaries can be downloaded and installed from the [Releases](https://github.com/grafana/xk6-dashboard/releases) page.
@@ -87,6 +89,7 @@ k6-web-dashboard replay file [flags]
       --host string     Hostname or IP address for HTTP endpoint (default: '', empty, listen on all interfaces)
       --open            Open browser window automatically
       --port int        TCP port for HTTP endpoint (0=random, -1=no HTTP), example: 8080 (default 5665)
+      --lang string     Language for the dashboard UI (default: "zh", available: "zh" or "en")
   -h, --help            help for replay
 ```
 
@@ -126,12 +129,16 @@ $ k6-web-dashboard replay test_result.ndjson
 # Generate report from previous test run (using events file):
 $ k6 run --out web-dashboard=record=test_result.ndjson script.js
 $ k6-web-dashboard report test_result.ndjson test_result_report.html
+
+# Generate report with specific language:
+$ k6-web-dashboard report --lang=en test_result.ndjson test_result_report.html
 ```
 
 ### Flags
 
 ```
       --open   Open browser window with generated report
+      --lang   Language for the generated report (default: "zh", available: "zh" or "en")
   -h, --help   help for report
 ```
 

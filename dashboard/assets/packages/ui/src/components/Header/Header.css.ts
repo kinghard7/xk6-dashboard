@@ -35,3 +35,15 @@ export const stats = style({
   padding: `${vars.sizes.size3} ${vars.sizes.size5}`,
   borderRadius: vars.borderRadius.md
 })
+
+export const langSwitch = style({
+  border: `1px solid ${vars.colors.border}`,
+  color: vars.colors.text.secondary,
+  background: vars.colors.secondary.main,
+  padding: `${vars.sizes.size1} ${vars.sizes.size2}`,
+  borderRadius: vars.borderRadius.sm,
+  cursor: "pointer",
+  selectors: {
+    '&:hover': { background: vars.colors.secondary.dark, color: vars.colors.text.primary }
+  }
+})

@@ -18,7 +18,7 @@ func Test_newWebServer(t *testing.T) {
 
 	th := helper(t)
 
-	srv := newWebServer(th.assets.ui, http.NotFoundHandler(), th.proc.logger)
+	srv := newWebServer(th.assets.ui, http.NotFoundHandler(), th.proc.logger, "zh")
 
 	require.NotNil(t, srv)
 	require.NotNil(t, srv.ServeMux)
@@ -52,7 +52,7 @@ func Test_webServer_used_addr(t *testing.T) {
 
 	th := helper(t)
 
-	srv := newWebServer(th.assets.ui, http.NotFoundHandler(), th.proc.logger)
+	srv := newWebServer(th.assets.ui, http.NotFoundHandler(), th.proc.logger, "zh")
 
 	addr, err := srv.listenAndServe("127.0.0.1:0")
 

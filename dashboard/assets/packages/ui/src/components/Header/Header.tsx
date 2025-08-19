@@ -18,6 +18,7 @@ import { Progress } from "components/Progress"
 import { TimeRangeResetButton } from "components/TimeRangeResetButton"
 import { Tooltip } from "components/Tooltip"
 import { vars } from "theme"
+import { getLanguage, setLanguage, t } from "i18n"
 
 import { getDuration, getRefreshRate, getTestPercentage } from "./Header.utils"
 import * as styles from "./Header.css"
@@ -34,6 +35,16 @@ export function Header({ config, tab, onTabChange }: HeaderProps) {
 
   const percentage = !digest.stop && getTestPercentage(digest, new Date())
 
+  const handleToggleLang = () => {
+    const next = getLanguage() === "zh" ? "en" : "zh"
+    setLanguage(next)
+    const params = new URLSearchParams(window.location.search)
+    params.set("lang", next)
+    window.location.search = params.toString()
+  }
+
+  const label = getLanguage() === "zh" ? t("header.lang.en") : t("header.lang.zh")
+
   return (
     <>
       <header className={styles.header}>
@@ -42,9 +53,9 @@ export function Header({ config, tab, onTabChange }: HeaderProps) {
             <Icon name="logo" />
             <Nav options={config.tabs} value={tab} onChange={onTabChange} />
           </Flex>
-          <Flex align="center">
+          <Flex align="center" gap={2}>
             {!isTablet && <Actions tab={tab} />}
-
+            <button className={styles.langSwitch} onClick={handleToggleLang} title={label}>{label}</button>
             <Options />
           </Flex>
         </Flex>
@@ -67,13 +78,13 @@ const Stats = () => {
   return (
     <div className={styles.stats}>
       <Flex align="center" gap={3}>
-        <Tooltip placement="bottom" title="Refresh rate">
+        <Tooltip placement="bottom" title={t("header.stats.refreshRate")}>
           <Flex align="center" gap={2}>
             <Icon name="stop-watch" width="12px" height="12px" />
             <span>{getRefreshRate(digest)}</span>
           </Flex>
         </Tooltip>
-        <Tooltip placement="bottom" title="Duration">
+        <Tooltip placement="bottom" title={t("header.stats.duration")}>
           <Flex align="center" gap={2}>
             <Icon name="hour-glass" width="12px" height="12px" />
             <span>{getDuration(digest)}</span>
@@ -94,7 +105,7 @@ const Actions = ({ tab }: ActionsProps) => {
   return (
     <>
       {!isSummary && <TimeRangeResetButton />}
-      <Button onClick={() => window.open("../report", "k6-report")}>Report</Button>
+      <Button onClick={() => window.open("../report", "k6-report")}>{t("header.actions.report")}</Button>
       <Stats />
     </>
   )
@@ -115,11 +126,11 @@ const Options = () => {
     <Menu>
       <Menu.Item onClick={handleHelpClick}>
         <Icon name="question" />
-        <span>Help</span>
+        <span>{t("header.menu.help")}</span>
       </Menu.Item>
       <Menu.Item onClick={handleThemeChange}>
         <Icon name={theme === "dark" ? "sun" : "moon"} />
-        <span>{theme === "dark" ? "Light" : "Dark"} mode</span>
+        <span>{theme === "dark" ? t("header.menu.lightMode") : t("header.menu.darkMode")}</span>
       </Menu.Item>
     </Menu>
   )

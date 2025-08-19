@@ -4,12 +4,13 @@
 
 import React from "react"
 import { Digest } from "@xk6-dashboard/model"
-import { Section as SectionClass, isEmptySection, PanelKind } from "@xk6-dashboard/view"
+import { Section as SectionClass } from "@xk6-dashboard/model"
+import { PanelKind, isEmptySection } from "@xk6-dashboard/view"
 
-import { ReactComponent as CircleIcon } from "assets/icons/circle.svg"
 import { Flex } from "components/Flex"
 import { Grid } from "components/Grid"
 import { Panel } from "components/Panel"
+import { translateConfig, translateSummary } from "utils/configTranslator"
 
 import { getColumnSizes } from "./Section.utils"
 import * as styles from "./Section.css"
@@ -32,10 +33,10 @@ export function Section({ section, digest }: SectionProps) {
     <section>
       {section.title && (
         <Flex className={styles.header} align="baseline" gap={2}>
-          <CircleIcon className={styles.icon} color={vars.colors.primary.dark} width="15px" height="15px" />
+          <div className={styles.icon}>●</div>
           <Flex direction="column">
-            <h3>{section.title}</h3>
-            <p>{section.summary}</p>
+            <h3>{translateConfig(section.title)}</h3>
+            <p>{translateSummary(section.summary)}</p>
           </Flex>
         </Flex>
       )}

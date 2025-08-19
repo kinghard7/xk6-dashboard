@@ -1,0 +1,62 @@
+{
+  "header": {
+    "actions.report": "Report",
+    "menu.help": "Help",
+    "menu.lightMode": "Light mode",
+    "menu.darkMode": "Dark mode",
+    "stats.refreshRate": "Refresh rate",
+    "stats.duration": "Duration",
+    "lang.zh": "中文",
+    "lang.en": "EN"
+  },
+  "loading": "Loading...",
+  "chart": {
+    "noData": "no data"
+  },
+  "config": {
+    "tabs": {
+      "overview": "Overview",
+      "timings": "Timings",
+      "summary": "Summary"
+    },
+    "sections": {
+      "http": "HTTP",
+      "grpc": "gRPC"
+    },
+    "panels": {
+      "iterationRate": "Iteration Rate",
+      "httpRequestRate": "HTTP Request Rate",
+      "httpRequestDuration": "HTTP Request Duration",
+      "httpRequestFailed": "HTTP Request Failed",
+      "receivedRate": "Received Rate",
+      "sentRate": "Sent Rate",
+      "httpPerformanceOverview": "HTTP Performance Overview",
+      "vus": "VUs",
+      "transferRate": "Transfer Rate",
+      "iterationDuration": "Iteration Duration",
+      "requestDuration": "Request Duration",
+      "requestFailedRate": "Request Failed Rate",
+      "requestConnecting": "Request Connecting",
+      "requestReceiving": "Request Receiving",
+      "requestBlocked": "Request Blocked",
+      "requestWaiting": "Request Waiting",
+      "requestRate": "Request Rate",
+      "tlsHandshaking": "TLS handshaking",
+      "requestSending": "Request Sending",
+      "streamsRate": "Streams Rate",
+      "trends": "Trends",
+      "counters": "Counters",
+      "rates": "Rates",
+      "gauges": "Gauges"
+    },
+    "summaries": {
+      "overview": "This chapter provides an overview of the most important metrics of the test run. Graphs plot the value of metrics over time.",
+      "timings": "This chapter provides an overview of test run HTTP timing metrics. Graphs plot the value of metrics over time.",
+      "summary": "This chapter provides a summary of the test run metrics. The tables contains the aggregated values of the metrics for the entire test run.",
+      "http": "These metrics are generated only when the test makes HTTP requests.",
+      "grpc": "k6 emits the following metrics when it interacts with a service through the gRPC API."
+    }
+  }
+}
+
+

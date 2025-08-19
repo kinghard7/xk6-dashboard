@@ -13,6 +13,7 @@ import { Header } from "components/Header"
 import { Tab } from "components/Tab/Tab"
 
 import * as styles from "./App.css"
+import { t } from "i18n"
 
 interface AppProps {
   digest: Digest
@@ -29,9 +30,7 @@ export default function App({ digest }: AppProps) {
 
       <section>
         <hr />
-        <p className={styles.usage}>
-          Select a time interval by holding down the mouse on any graph to zoom. To cancel zoom, double click on any graph.
-        </p>
+        <p className={styles.usage}>{t("app.usage")}</p>
       </section>
     </Flex>
   )

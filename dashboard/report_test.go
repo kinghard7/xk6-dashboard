@@ -80,7 +80,7 @@ func Test_briefer_exportJSON_error(t *testing.T) {
 
 	th.assets.config = nil
 
-	rep := newReporter("", th.assets, th.proc)
+	rep := newReporter("", "zh", th.assets, th.proc)
 
 	rep.data.cumulative = &recorderEnvelope{Name: "dummy", Data: recursiveJSON(t)}
 
@@ -109,7 +109,7 @@ func Test_briefer_exportBase64_error(t *testing.T) {
 
 	th.assets.config = nil
 
-	rep := newReporter("", th.assets, th.proc)
+	rep := newReporter("", "zh", th.assets, th.proc)
 
 	rep.data.cumulative = &recorderEnvelope{Name: "dummy", Data: recursiveJSON(t)}
 
@@ -129,7 +129,7 @@ func Test_briefer_inject_error(t *testing.T) {
 
 	th := helper(t)
 
-	rep := newReporter("", th.assets, th.proc)
+	rep := newReporter("", "zh", th.assets, th.proc)
 
 	file, err := th.assets.report.Open("index.html")
 
@@ -159,7 +159,7 @@ func Test_briefer_onEvent(t *testing.T) {
 
 	th := helper(t)
 
-	rep := newReporter("", th.assets, th.proc)
+	rep := newReporter("", "zh", th.assets, th.proc)
 
 	data := make(map[string]interface{})
 

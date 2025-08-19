@@ -23,6 +23,7 @@ const (
 	defaultOpen   = false
 	defaultExport = ""
 	defaultRecord = ""
+	defaultLang   = "zh"
 )
 
 func defaultTags() []string { return []string{"group"} }
@@ -36,6 +37,7 @@ type options struct {
 	Record string
 	Tags   []string
 	TagsS  string
+	Lang   string
 }
 
 func envopts(env map[string]string) (*options, error) { //nolint:cyclop
@@ -48,6 +50,7 @@ func envopts(env map[string]string) (*options, error) { //nolint:cyclop
 		Record: defaultRecord,
 		Tags:   defaultTags(),
 		TagsS:  "",
+		Lang:   defaultLang,
 	}
 
 	if len(env) == 0 {
@@ -92,6 +95,12 @@ func envopts(env map[string]string) (*options, error) { //nolint:cyclop
 
 	if v, ok := env[envTags]; ok {
 		opts.Tags = strings.Split(v, ",")
+	}
+
+	if v, ok := env[envLang]; ok {
+		if v == "zh" || v == "en" {
+			opts.Lang = v
+		}
 	}
 
 	return opts, nil
@@ -154,6 +163,12 @@ func getopts(query string, env map[string]string) (*options, error) { //nolint:c
 
 	if v := value.Get(paramTags); len(v) != 0 {
 		opts.Tags = append(opts.Tags, strings.Split(v, ",")...)
+	}
+
+	if v := value.Get(paramLang); len(v) != 0 {
+		if v == "zh" || v == "en" {
+			opts.Lang = v
+		}
 	}
 
 	return opts, err
@@ -224,4 +239,7 @@ const (
 	paramTag  = "tag"
 	paramTags = "tags"
 	envTags   = envPrefix + "TAGS"
+
+	paramLang = "lang"
+	envLang   = envPrefix + "LANG"
 )

@@ -4,10 +4,11 @@
 
 import React from "react"
 import { Digest } from "@xk6-dashboard/model"
+import { Tab as TabType } from "@xk6-dashboard/model"
 
-import { Tab as TabType } from "types/config"
 import { Flex } from "components/Flex"
-import { Section } from "components/Section"
+import { Section } from "components/Section/Section"
+import { translateConfig, translateSummary } from "utils/configTranslator"
 
 import * as styles from "./Tab.css"
 
@@ -20,8 +21,8 @@ export function Tab({ tab, digest }: TabProps) {
   return (
     <Flex id={tab.id} direction="column" gap={4}>
       <div className={styles.header}>
-        <h2 className={styles.title}>{tab.title}</h2>
-        <p>{tab.summary}</p>
+        <h2 className={styles.title}>{translateConfig(tab.title)}</h2>
+        <p>{translateSummary(tab.summary)}</p>
       </div>
 
       {tab.sections.map((section) => (

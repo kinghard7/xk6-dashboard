@@ -1,0 +1,62 @@
+{
+  "header": {
+    "actions.report": "报告",
+    "menu.help": "帮助",
+    "menu.lightMode": "浅色模式",
+    "menu.darkMode": "深色模式",
+    "stats.refreshRate": "刷新频率",
+    "stats.duration": "持续时间",
+    "lang.zh": "中文",
+    "lang.en": "英"
+  },
+  "loading": "加载中...",
+  "chart": {
+    "noData": "暂无数据"
+  },
+  "config": {
+    "tabs": {
+      "overview": "概览",
+      "timings": "时序",
+      "summary": "摘要"
+    },
+    "sections": {
+      "http": "HTTP",
+      "grpc": "gRPC"
+    },
+    "panels": {
+      "iterationRate": "迭代频率",
+      "httpRequestRate": "HTTP请求频率",
+      "httpRequestDuration": "HTTP请求持续时间",
+      "httpRequestFailed": "HTTP请求失败",
+      "receivedRate": "接收速率",
+      "sentRate": "发送速率",
+      "httpPerformanceOverview": "HTTP性能概览",
+      "vus": "虚拟用户数",
+      "transferRate": "传输速率",
+      "iterationDuration": "迭代持续时间",
+      "requestDuration": "请求持续时间",
+      "requestFailedRate": "请求失败率",
+      "requestConnecting": "请求连接",
+      "requestReceiving": "请求接收",
+      "requestBlocked": "请求阻塞",
+      "requestWaiting": "请求等待",
+      "requestRate": "请求速率",
+      "tlsHandshaking": "TLS握手",
+      "requestSending": "请求发送",
+      "streamsRate": "流速率",
+      "trends": "趋势",
+      "counters": "计数器",
+      "rates": "速率",
+      "gauges": "仪表"
+    },
+    "summaries": {
+      "overview": "本章概述了测试运行中最重要的指标。图表绘制了指标随时间变化的值。",
+      "timings": "本章概述了测试运行HTTP计时指标。图表绘制了指标随时间变化的值。",
+      "summary": "本章提供了测试运行指标的摘要。表格包含整个测试运行的指标聚合值。",
+      "http": "这些指标仅在测试发出HTTP请求时生成。",
+      "grpc": "这些指标仅在测试通过gRPC API与服务交互时生成。"
+    }
+  }
+}
+
+

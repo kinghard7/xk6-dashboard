@@ -7,6 +7,7 @@ import { Digest } from "@xk6-dashboard/model"
 import { Panel, SummaryTable } from "@xk6-dashboard/view"
 
 import { Table } from "components/Table"
+import { translatePanelTitle } from "utils/configTranslator"
 
 import * as styles from "./Summary.css"
 
@@ -25,7 +26,7 @@ export default function Summary({ panel, digest }: SummaryProps) {
   return (
     <div className={styles.container}>
       <Table>
-        <caption className={styles.caption}>{panel.title}</caption>
+        <caption className={styles.caption}>{translatePanelTitle(panel.title)}</caption>
         <Table.Head>
           <Table.Row isHead>
             {table.header.map((name, idx) => (

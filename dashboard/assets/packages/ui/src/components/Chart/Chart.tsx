@@ -17,6 +17,8 @@ import { Grid } from "components/Grid"
 import { Icon } from "components/Icon"
 import { Paper } from "components/Paper"
 import { Tooltip } from "components/Tooltip"
+import { t } from "i18n"
+import { translatePanelTitle } from "utils/configTranslator"
 
 import { SeriesPlotWithDefinedSeries } from "./Chart.utils"
 import { useOptions } from "./Chart.hooks"
@@ -54,13 +56,13 @@ export default function Chart({ panel, container }: ChartProps) {
       <Wrapper>
         <div ref={ref}>
           <Flex align="center" gap={1}>
-            <h3 className={styles.title}>{panel.title}</h3>
+            <h3 className={styles.title}>{translatePanelTitle(panel.title)}</h3>
             <Tooltip title={panel.summary}>
               <Icon name="info" width="20px" height="20px" />
             </Tooltip>
           </Flex>
           <div className={styles.chartWrapper}>
-            {!hasData && <p className={styles.noData}>no data</p>}
+            {!hasData && <p className={styles.noData}>{t("chart.noData")}</p>}
             <UplotReact options={options} data={plotData} onCreate={onCreate} />
           </div>
         </div>

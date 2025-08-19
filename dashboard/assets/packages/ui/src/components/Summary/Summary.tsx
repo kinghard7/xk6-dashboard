@@ -8,6 +8,7 @@ import { Panel, SummaryTable } from "@xk6-dashboard/view"
 import { useDigest } from "store/digest"
 import { Grid } from "components/Grid"
 import { Table } from "components/Table"
+import { translatePanelTitle } from "utils/configTranslator"
 
 import * as styles from "./Summary.css"
 import { Card } from "components/Card"
@@ -30,7 +31,7 @@ export default function Summary({ panel }: SummaryProps) {
 
   return (
     <Grid.Column xs={12} md={md} lg={lg}>
-      <Card key={panel.id} className={styles.container} title={panel.title}>
+      <Card key={panel.id} className={styles.container} title={translatePanelTitle(panel.title)}>
         <div className={styles.body}>
           <Table>
             <Table.Head>

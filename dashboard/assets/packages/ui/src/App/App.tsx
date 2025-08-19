@@ -12,6 +12,7 @@ import { Footer } from "components/Footer/Footer"
 import { Header } from "components/Header"
 import { LoadingContainer } from "components/LoadingContainer"
 import { Section } from "components/Section/Section"
+import { t } from "i18n"
 
 import * as styles from "./App.css"
 
@@ -26,7 +27,7 @@ export default function App() {
     <Flex className={`${themeClassName} ${styles.container}`} direction="column" gap={0}>
       <Header config={digest.config} tab={tab} onTabChange={setTab} />
       <Flex as="main" className={styles.main} direction="column" grow={!hasData ? 1 : 0}>
-        <LoadingContainer isLoading={!hasData} message="Loading...">
+        <LoadingContainer isLoading={!hasData} message={t("loading")}>
           {digest.config.tabs.map((data, idx) => (
             <TabPanel key={data.id} active={tab} idx={idx}>
               {data.sections.map((section) => (

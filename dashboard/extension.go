@@ -10,6 +10,8 @@ package dashboard
 import (
 	"fmt"
 	"net/http"
+	"os"
+	"strings"
 	"sync/atomic"
 	"time"
 
@@ -61,7 +63,25 @@ func New(params output.Params) (output.Output, error) {
 }
 
 func newWithAssets(params output.Params, assets *assets) (*extension, error) {
-	opts, err := getopts(params.ConfigArgument, params.Environment)
+	// Get options from both params.Environment and system environment
+	// This ensures K6_WEB_DASHBOARD_* env vars are properly read
+	env := make(map[string]string)
+	for k, v := range params.Environment {
+		env[k] = v
+	}
+
+	// Also check system environment for K6_WEB_DASHBOARD_* vars
+	for _, e := range os.Environ() {
+		if len(e) > len(envPrefix) && e[:len(envPrefix)] == envPrefix {
+			if idx := strings.IndexByte(e, '='); idx > 0 {
+				key := e[:idx]
+				value := e[idx+1:]
+				env[key] = value
+			}
+		}
+	}
+
+	opts, err := getopts(params.ConfigArgument, env)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +128,7 @@ func (ext *extension) Start() error {
 		ext.addEventListener(newRecorder(ext.options.Record, ext.proc))
 	}
 
-	brf := newReporter(ext.options.Export, ext.assets, ext.proc)
+	brf := newReporter(ext.options.Export, ext.options.Lang, ext.assets, ext.proc)
 
 	ext.addEventListener(brf)
 
@@ -177,7 +197,7 @@ func (ext *extension) AddMetricSamples(samples []metrics.SampleContainer) {
 }
 
 func (ext *extension) startServer(handler http.Handler) error {
-	ext.server = newWebServer(ext.assets.ui, handler, ext.proc.logger)
+	ext.server = newWebServer(ext.assets.ui, handler, ext.proc.logger, ext.options.Lang)
 	ext.addEventListener(ext.server)
 
 	addr, err := ext.server.listenAndServe(ext.options.addr())

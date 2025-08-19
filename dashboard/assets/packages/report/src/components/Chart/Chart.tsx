@@ -16,6 +16,8 @@ import { colors } from "utils"
 import { createOptions } from "./Chart.utils"
 import { useElementWidth } from "./Chart.hooks"
 import * as styles from "./Chart.css"
+import { t } from "i18n"
+import { translatePanelTitle } from "utils/configTranslator"
 
 interface ChartProps {
   panel: Panel
@@ -32,9 +34,9 @@ export default function Chart({ panel, digest }: ChartProps) {
 
   return (
     <div ref={ref} className={styles.chart}>
-      <h4 className={styles.title}>{panel.title}</h4>
+      <h4 className={styles.title}>{translatePanelTitle(panel.title)}</h4>
       <div className={styles.chartWrapper}>
-        {!hasData && <p className={styles.noData}>no data</p>}
+        {!hasData && <p className={styles.noData}>{t("chart.noData")}</p>}
         <UplotReact options={options} data={plotData} />
       </div>
     </div>

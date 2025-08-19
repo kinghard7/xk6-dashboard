@@ -11,6 +11,7 @@ import (
 	"compress/gzip"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"path/filepath"
@@ -26,6 +27,7 @@ type reporter struct {
 	mu     sync.RWMutex
 
 	snapshotCount int
+	lang          string
 }
 
 var (
@@ -33,12 +35,13 @@ var (
 	_ http.Handler  = (*reporter)(nil)
 )
 
-func newReporter(output string, assets *assets, proc *process) *reporter {
+func newReporter(output string, lang string, assets *assets, proc *process) *reporter {
 	rep := &reporter{ //nolint:exhaustruct
 		data:   newReportData(assets.config),
 		assets: assets,
 		proc:   proc,
 		output: output,
+		lang:   lang,
 	}
 
 	return rep
@@ -165,41 +168,65 @@ func (rep *reporter) exportHTML(out io.Writer) error {
 		return err
 	}
 
-	html, err = rep.inject(out, html, []byte(dataTag), rep.exportBase64)
-	if err != nil {
+	// Inject initial language after <head>
+	if rep.lang != "" {
+		html = rep.injectIntoHTML(html, []byte("<head>"), []byte("\n<script>window.__DASHBOARD_LANG__='"+rep.lang+"';</script>\n"))
+	}
+
+	// Find the data tag position
+	dataTagPos := bytes.Index(html, []byte(dataTag))
+	if dataTagPos < 0 {
+		return fmt.Errorf("data tag not found in HTML template")
+	}
+
+	// Write HTML before the data tag
+	if _, err := out.Write(html[:dataTagPos]); err != nil {
 		return err
 	}
 
-	if _, err := out.Write(html); err != nil {
+	// Write the data tag
+	if _, err := out.Write([]byte(dataTag)); err != nil {
+		return err
+	}
+
+	// Write the base64 encoded data
+	if err := rep.exportBase64(out); err != nil {
+		return err
+	}
+
+	// Write the closing script tag and remaining HTML
+	closingTag := []byte("</script>")
+	closingPos := bytes.Index(html[dataTagPos:], closingTag)
+	if closingPos < 0 {
+		return fmt.Errorf("closing script tag not found")
+	}
+
+	// Write the closing tag and remaining HTML
+	if _, err := out.Write(closingTag); err != nil {
+		return err
+	}
+
+	if _, err := out.Write(html[dataTagPos+closingPos+len(closingTag):]); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (rep *reporter) inject(
-	out io.Writer,
-	html []byte,
-	tag []byte,
-	dataFunc func(io.Writer) error,
-) ([]byte, error) {
+func (rep *reporter) injectIntoHTML(html []byte, tag []byte, insertContent []byte) []byte {
 	idx := bytes.Index(html, tag)
-
 	if idx < 0 {
 		panic("invalid brief HTML, no tag: " + string(tag))
 	}
 
 	idx += len(tag)
 
-	if _, err := out.Write(html[:idx]); err != nil {
-		return nil, err
-	}
-
-	if err := dataFunc(out); err != nil {
-		return nil, err
-	}
-
-	return html[idx:], nil
+	// Insert content after the tag
+	result := make([]byte, 0, len(html)+len(insertContent))
+	result = append(result, html[:idx]...)
+	result = append(result, insertContent...)
+	result = append(result, html[idx:]...)
+	return result
 }
 
 type reportData struct {

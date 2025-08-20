@@ -3,7 +3,9 @@
 ![GitHub Downloads](https://img.shields.io/github/downloads/grafana/xk6-dashboard/total)
 [![GitHub Release](https://img.shields.io/github/v/release/grafana/xk6-dashboard)](https://github.com/grafana/xk6-dashboard/releases/)
 
-
+# 汉化导出报告
+![汉化报告](/screenshot/汉化report.png)
+--
 # xk6-dashboard
 
 ![k6 dashboard overview dark](screenshot/k6-dashboard-overview-dark.png#gh-dark-mode-only)
@@ -12,7 +14,6 @@
 A [k6 extension](https://k6.io/docs/extensions/) that that makes [k6](https://k6.io) metrics available on a web-based dashboard. The dashboard is updated continuously during the test run using [server-sent events (SSE)](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events). The test run [report can be exported](#save-report) to a responsive self-contained HTML file, which can be displayed even without an Internet connection.
 
 **New in this fork: Multi-language support with Chinese (zh) as default and English (en) available. Use the language toggle button in the header to switch between languages.**
-
 <details>
 <summary><strong>Screenshots</strong></summary>
 
